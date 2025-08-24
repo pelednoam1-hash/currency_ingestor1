@@ -28,4 +28,8 @@ def insert_rows(rows):
     table_id = ensure_table()
     errors = client.insert_rows_json(table_id, rows)
     if errors:
+        # הדפס פירוט ליומן Cloud Run
+        import json, sys
+        print("BQ insert errors:", json.dumps(errors, ensure_ascii=False), file=sys.stderr)
         raise RuntimeError(errors)
+
