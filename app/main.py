@@ -6,6 +6,20 @@ from typing import List
 from app.exchangerate import fetch_rates
 from app.bq import insert_rows, ensure_table
 
+from fastapi.responses import JSONResponse
+from app.bq import test_insert_one
+
+@app.post("/test_bq")
+def test_bq():
+    try:
+        errors = test_insert_one()
+        # אם רשימת errors ריקה – זה אומר שההכנסה הצליחה
+        return {"ok": True, "errors": errors}
+    except Exception as e:
+        # נחזיר 500 עם הודעה, וגם זה יופיע בלוגים
+        return JSONResponse(status_code=500, content={"ok": False, "error": str(e)})
+
+
 app = FastAPI(title="Currency Ingestor")
 
 @app.get("/health")
