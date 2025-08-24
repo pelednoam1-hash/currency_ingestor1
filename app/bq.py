@@ -35,5 +35,21 @@ def insert_rows(rows):
     except BadRequest as e:
         print(f"BQ insert BadRequest: {e}", file=sys.stderr)
         raise
+from datetime import datetime, timezone
+
+def test_insert_one():
+    """מנסה להכניס שורה אחת לטבלה ומחזיר את תוצאת ההכנסה (רשימת errors ריקה = הצליח)."""
+    # שורה לדוגמה
+    now = datetime.now(timezone.utc)
+    row = {
+        "date": now.date().isoformat(),     # DATE
+        "base": "USD",                      # STRING
+        "target": "ILS",                    # STRING
+        "rate": 3.7,                        # FLOAT64
+        "ingested_at": now.isoformat(),     # TIMESTAMP (ISO 8601)
+    }
+    # נשתמש בפונקציה שלך שמבצעת ensure_table ואז insert
+    return insert_rows([row])  # צריך להחזיר [] אם הכל טוב
+
 
 
