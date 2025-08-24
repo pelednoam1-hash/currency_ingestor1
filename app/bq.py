@@ -1,7 +1,7 @@
 import os
 from google.cloud import bigquery
 
-PROJECT_ID = os.getenv("PROJECT_ID")
+PROJECT_ID = os.getenv("raven-data-project-467319")
 DATASET = os.getenv("BQ_DATASET", "analytics")
 TABLE   = os.getenv("BQ_TABLE", "exchange_rates")
 
